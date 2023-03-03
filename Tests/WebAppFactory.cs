@@ -1,25 +1,17 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
+using Xunit.Abstractions;
 
-public class MyTest : IClassFixture<WebApplicationFactory<Program>>
+public partial class MyTest : IClassFixture<WebApplicationFactory<Program>>
 {
   private readonly HttpClient _client;
 
-  public MyTest(WebApplicationFactory<Program> factory)
+  public MyTest(WebApplicationFactory<Program> factory, ITestOutputHelper testOutputHelper)
   {
     _client = factory.CreateClient();
+    _testOutputHelper = testOutputHelper;
   }
 
-  [Fact]
-  public async Task TestMethod()
-  {
-    var response = await _client.GetAsync("/cipher/encrypt/256?key=ACB&data=HelloWorld");
-    response.EnsureSuccessStatusCode();
-    var responseString = await response.Content.ReadAsStringAsync();
+  private readonly ITestOutputHelper _testOutputHelper;
 
-    // JSONをデシリアライズして、期待値と比較する
-    var result = JsonConvert.DeserializeObject<MyResponseType>(responseString);
-
-    Assert.Equal("uaSInHrfPqXFv+87JUnPAw==", result.encrypted);
-  }
 }

@@ -114,7 +114,19 @@ public static class ECB
       string decryptedString = Encoding.UTF8.GetString(decryptedBytes);
       Console.WriteLine($"Decrypted string: {decryptedString}");
 
-      return Results.Ok(decryptedString);
+      MyResponseType response = new(
+        MyCipherMethod.Encrypt,
+        MyCipherAlgo.AES,
+        MyCipherMode.ECB,
+        bit,
+        data ?? "",
+        null,
+        key_string,
+        null,
+        decryptedString
+      );
+
+      return Results.Ok(response);
     } catch (Exception ex)
     {
       Console.WriteLine($"{ex}");

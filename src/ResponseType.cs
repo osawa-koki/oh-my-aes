@@ -22,7 +22,7 @@ public record MyResponseType(
   int CipherLength,
   string Key,
   string? IV,
-  string data,
-  string? encrypted,
-  string? decypted
+  string Data,
+  string? Encrypted,
+  string? Decrypted
 );
