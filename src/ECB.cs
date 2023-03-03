@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-public static class Cipher
+public static class ECB
 {
   public static IResult Encrypt(int bit = 256, string? key = null, string? data = null)
   {

@@ -14,7 +14,7 @@ if (app.Environment.IsDevelopment())
   app.UseSwaggerUI();
 }
 
-app.MapGet("/cipher/encrypt/{bit}", Cipher.Encrypt).WithName("Encrypt").WithOpenApi();
-app.MapGet("/cipher/decrypt/{bit}", Cipher.Decrypt).WithName("Decrypt").WithOpenApi();
+app.MapGet("/cipher/encrypt/{bit}", ECB.Encrypt).WithName("Encrypt").WithOpenApi();
+app.MapGet("/cipher/decrypt/{bit}", ECB.Decrypt).WithName("Decrypt").WithOpenApi();
 
 app.Run("http://localhost:2525");
