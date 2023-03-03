@@ -6,7 +6,7 @@ public partial class MyTest : IClassFixture<WebApplicationFactory<Program>>
 
 
   [Fact]
-  public async Task ECB_TEST()
+  public async Task ECB_MATCHER_TEST()
   {
     // // テスト用のデータを生成する
     var cipher_data_list = new string[] { "HelloWorld", "あいうえお", "ｱｲｳｴｵ", "人工知能" };
