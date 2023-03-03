@@ -49,7 +49,19 @@ public static class ECB
       string encryptedString = Convert.ToBase64String(encryptedBytes);
       Console.WriteLine($"Encrypted string: {encryptedString}");
 
-      return Results.Ok(encryptedString);
+      MyResponseType response = new(
+        MyCipherMethod.Encrypt,
+        MyCipherAlgo.AES,
+        MyCipherMode.ECB,
+        bit,
+        target,
+        null,
+        key_string,
+        encryptedString,
+        null
+      );
+
+      return Results.Ok(response);
     } catch (Exception ex)
     {
       Console.WriteLine($"{ex}");
