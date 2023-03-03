@@ -54,9 +54,9 @@ public static class ECB
         MyCipherAlgo.AES,
         MyCipherMode.ECB,
         bit,
-        target,
-        null,
         key_string,
+        null,
+        target,
         encryptedString,
         null
       );
@@ -119,9 +119,9 @@ public static class ECB
         MyCipherAlgo.AES,
         MyCipherMode.ECB,
         bit,
-        data ?? "",
-        null,
         key_string,
+        null,
+        data ?? "",
         null,
         decryptedString
       );

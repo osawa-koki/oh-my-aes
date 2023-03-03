@@ -18,11 +18,11 @@ public partial class MyTest : IClassFixture<WebApplicationFactory<Program>>
     // Assert.Equal("uaSInHrfPqXFv+87JUnPAw==", result.encrypted);
 
     // // テスト用のデータを生成する
-    var cipher_data_list = new string[] { "HelloWorld", "あいうえお", "ｱｲｳｴｵ" };
-    var cipher_key_list = new string[] { "ABC", "_ABC", "あ" };
+    var cipher_data_list = new string[] { "HelloWorld", "あいうえお", "ｱｲｳｴｵ", "人工知能" };
+    var cipher_key_list = new string[] { "ABC", "_ABC", "ｱｲｳｴｵ", "あ", "計算機" };
     var cipher_length_list = new int[] { 256, 256, 256 };
 
-    for (int i = 0; i < 1; i++)
+    for (int i = 0; i < 30; i++)
     {
       // キーとデータのビットはランダムで文字列を生成して、暗号化・復号化を行う
       var random = new Random();
@@ -33,6 +33,7 @@ public partial class MyTest : IClassFixture<WebApplicationFactory<Program>>
 
       // 暗号化
       var encrypt_request_path = $"/cipher/encrypt/{cipher_length}?key={key_string}&data={data_string}";
+      _testOutputHelper.WriteLine($"encrypt_request_path -> {encrypt_request_path}");
       var encrypt_response = await _client.GetAsync(encrypt_request_path);
       encrypt_response.EnsureSuccessStatusCode();
       var encrypt_response_string = await encrypt_response.Content.ReadAsStringAsync();
@@ -54,6 +55,7 @@ public partial class MyTest : IClassFixture<WebApplicationFactory<Program>>
 
       Assert.Equal(data_string, decrypt_result.Decrypted);
       
+      _testOutputHelper.WriteLine($"========== ========= ========== ========= ==========");
     }
 
     {
