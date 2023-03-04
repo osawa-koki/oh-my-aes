@@ -21,7 +21,7 @@ public partial class MyTest : IClassFixture<WebApplicationFactory<Program>>
       var cipher_length = cipher_length_list[random.Next(0, cipher_length_list.Length)];
 
       // 暗号化
-      var encrypt_request_path = $"/cipher/aes/ecb/encrypt/{cipher_length}?key={key_string}&data={data_string}";
+      var encrypt_request_path = $"/api/cipher/aes/ecb/encrypt/{cipher_length}?key={key_string}&data={data_string}";
       _testOutputHelper.WriteLine($"encrypt_request_path -> {encrypt_request_path}");
       var encrypt_response = await _client.GetAsync(encrypt_request_path);
       encrypt_response.EnsureSuccessStatusCode();
@@ -32,7 +32,7 @@ public partial class MyTest : IClassFixture<WebApplicationFactory<Program>>
       var encrypt_result = JsonConvert.DeserializeObject<MyResponseType>(encrypt_response_string);
 
       // 復号化を行う
-      var decrypt_request_path = $"/cipher/aes/ecb/decrypt/{cipher_length}?key={key_string}&data={encrypt_result.Encrypted}";
+      var decrypt_request_path = $"/api/cipher/aes/ecb/decrypt/{cipher_length}?key={key_string}&data={encrypt_result.Encrypted}";
       _testOutputHelper.WriteLine($"decrypt_request_path -> {decrypt_request_path}");
       var decrypt_response = await _client.GetAsync(decrypt_request_path);
       decrypt_response.EnsureSuccessStatusCode();

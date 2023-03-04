@@ -19,8 +19,8 @@ public class Program
       app.UseSwaggerUI();
     }
 
-    app.MapGet("/cipher/aes/ecb/encrypt/{bit}", ECB.Encrypt).WithName("Encrypt").WithOpenApi();
-    app.MapGet("/cipher/aes/ecb/decrypt/{bit}", ECB.Decrypt).WithName("Decrypt").WithOpenApi();
+    app.MapGet("/api/cipher/aes/ecb/encrypt/{bit}", ECB.Encrypt).WithName("Encrypt").WithOpenApi();
+    app.MapGet("/api/cipher/aes/ecb/decrypt/{bit}", ECB.Decrypt).WithName("Decrypt").WithOpenApi();
 
     app.Run("http://0.0.0.0:8000");
   }
