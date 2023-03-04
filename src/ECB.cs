@@ -4,17 +4,15 @@ using System.Text;
 
 public static class ECB
 {
-  public static IResult Encrypt(int bit = 256, string? key = null, string? data = null)
+  public static IResult Encrypt(int bit = 256, string key = "", string data = "")
   {
     try
     {
       // 対象文字列をUTF8でエンコードしてバイト配列に変換する
-      string target = data ?? "";
-      byte[] plainBytes = Encoding.UTF8.GetBytes(target);
+      byte[] plain_bytes = Encoding.UTF8.GetBytes(data);
 
       // 暗号化キーをバイト配列に変換する
-      string key_string = key ?? "";
-      byte[] key_bytes = Encoding.UTF8.GetBytes(key_string);
+      byte[] key_bytes = Encoding.UTF8.GetBytes(key);
 
       // キーの長さを調整する
       int keySize = bit / 8;
@@ -42,7 +40,7 @@ public static class ECB
       byte[] encryptedBytes;
       using (ICryptoTransform encryptor = aes.CreateEncryptor())
       {
-        encryptedBytes = encryptor.TransformFinalBlock(plainBytes, 0, plainBytes.Length);
+        encryptedBytes = encryptor.TransformFinalBlock(plain_bytes, 0, plain_bytes.Length);
       }
 
       // 暗号化されたバイト配列をBase64文字列に変換する
@@ -54,9 +52,9 @@ public static class ECB
         MyCipherAlgo.AES,
         MyCipherMode.ECB,
         bit,
-        key_string,
+        key,
         null,
-        target,
+        data,
         encryptedString,
         null
       );
@@ -74,19 +72,17 @@ public static class ECB
     }
   }
 
-  public static IResult Decrypt(int bit = 256, string? key = null, string? data = null)
+  public static IResult Decrypt(int bit = 256, string key = "", string data = "")
   {
     try
     {
       Console.WriteLine($"Decrypting {data} with {key}...");
 
       // 暗号化された文字列をBase64でデコードしてバイト配列に変換する
-      string encryptedString = data ?? "";
-      byte[] encryptedBytes = Convert.FromBase64String(encryptedString);
+      byte[] encrypted_bytes = Convert.FromBase64String(data);
 
       // 暗号化キーをバイト配列に変換する
-      string key_string = key ?? "";
-      byte[] key_bytes = Encoding.UTF8.GetBytes(key_string);
+      byte[] key_bytes = Encoding.UTF8.GetBytes(key);
 
       // キーの長さを調整する
       int keySize = bit / 8;
@@ -114,7 +110,7 @@ public static class ECB
       byte[] decryptedBytes;
       using (ICryptoTransform decryptor = aes.CreateDecryptor())
       {
-        decryptedBytes = decryptor.TransformFinalBlock(encryptedBytes, 0, encryptedBytes.Length);
+        decryptedBytes = decryptor.TransformFinalBlock(encrypted_bytes, 0, encrypted_bytes.Length);
       }
 
       // 復号化されたバイト配列をUTF8文字列に変換する
@@ -126,9 +122,9 @@ public static class ECB
         MyCipherAlgo.AES,
         MyCipherMode.ECB,
         bit,
-        key_string,
+        key,
         null,
-        data ?? "",
+        data,
         null,
         decryptedString
       );
