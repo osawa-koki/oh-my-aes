@@ -38,6 +38,15 @@ export default function EncryptPage() {
           <Form.Label>暗号化キー</Form.Label>
           <Form.Control type="text" placeholder="Enter Key" value={key} onInput={(e) => {setKey((e.target as HTMLTextAreaElement).value)}} />
         </Form.Group>
+        {
+          content && (
+            <>
+              <Alert variant="warning" className="mt-3">
+                {warning}
+              </Alert>
+            </>
+          )
+        }
         <div className="mt-3 d-flex justify-content-center">
           <Button variant="primary" onClick={Encrypt}>暗号化 🔏</Button>
         </div>
