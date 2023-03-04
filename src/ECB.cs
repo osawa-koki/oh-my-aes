@@ -7,6 +7,12 @@ public static class ECB
   {
     try
     {
+      var valid_bits = new int[] { 128, 192, 256 };
+      if (valid_bits.Contains(bit) == false)
+      {
+        return Results.BadRequest($"Invalid bit: {bit}");
+      }
+
       // 対象文字列をUTF8でエンコードしてバイト配列に変換する
       byte[] plain_bytes = Encoding.UTF8.GetBytes(data);
 
@@ -61,7 +67,11 @@ public static class ECB
   {
     try
     {
-      Console.WriteLine($"Decrypting {data} with {key}...");
+      var valid_bits = new int[] { 128, 192, 256 };
+      if (valid_bits.Contains(bit) == false)
+      {
+        return Results.BadRequest($"Invalid bit: {bit}");
+      }
 
       // 暗号化された文字列をBase64でデコードしてバイト配列に変換する
       byte[] encrypted_bytes = Convert.FromBase64String(data);
