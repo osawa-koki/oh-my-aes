@@ -1,4 +1,4 @@
-﻿
+
 using System.Security.Cryptography;
 using System.Text;
 
@@ -62,7 +62,12 @@ public static class ECB
       );
 
       return Results.Ok(response);
-    } catch (Exception ex)
+    }
+    catch (CryptographicException ex)
+    {
+      return Results.BadRequest(ex.Message);
+    }
+    catch (Exception ex)
     {
       Console.WriteLine($"{ex}");
       return Results.Problem($"{ex}");
@@ -127,7 +132,12 @@ public static class ECB
       );
 
       return Results.Ok(response);
-    } catch (Exception ex)
+    }
+    catch (CryptographicException ex)
+    {
+      return Results.BadRequest(ex.Message);
+    }
+    catch (Exception ex)
     {
       Console.WriteLine($"{ex}");
       return Results.Problem($"{ex}");
