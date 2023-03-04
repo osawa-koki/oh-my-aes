@@ -16,7 +16,7 @@ export default function EncryptPage() {
       fetch(`${setting.apiPath}/api/cipher/aes/ecb/encrypt/256?key=${key}&data=${content}`)
         .then(res => res.json())
         .then((json: MyResponseType) => {
-          setEncrypted(json.Encrypted);
+          setEncrypted(json.encrypted);
         })
         .catch(e => {
           setError(e.message);

@@ -15,6 +15,11 @@ const pages = [
     path: "/encrypt/",
     name: "Encrypt",
   },
+  {
+    emoji: "💓",
+    path: "/decrypt/",
+    name: "Decrypt",
+  },
 ];
 
 export default pages;

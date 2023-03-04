@@ -13,15 +13,15 @@ enum MyCipherMode {
 }
 
 interface MyResponseType {
-  CipherMethod: MyCipherMethod;
-  CipherAlgo: MyCipherAlgo;
-  CipherMode: MyCipherMode;
-  CipherLength: number;
-  Key: string;
-  IV?: string;
-  Data: string;
-  Encrypted?: string;
-  Decrypted?: string;
+  cipherMethod: MyCipherMethod;
+  cipherAlgo: MyCipherAlgo;
+  cipherMode: MyCipherMode;
+  cipherLength: number;
+  key: string;
+  iv?: string;
+  data: string;
+  encrypted?: string;
+  decrypted?: string;
 }
 
 export type { MyResponseType, MyCipherMethod, MyCipherAlgo, MyCipherMode };
