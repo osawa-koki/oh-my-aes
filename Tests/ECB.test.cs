@@ -9,7 +9,7 @@ public partial class MyTest : IClassFixture<WebApplicationFactory<Program>>
     // // テスト用のデータを生成する
     var cipher_data_list = new string[] { "HelloWorld", "あいうえお", "ｱｲｳｴｵ", "人工知能" };
     var cipher_key_list = new string[] { "ABC", "_ABC", "ｱｲｳｴｵ", "あ", "計算機" };
-    var cipher_length_list = new int[] { 256 };
+    var cipher_length_list = new int[] { 128, 192, 256 };
 
     for (int i = 0; i < 30; i++)
     {
@@ -32,7 +32,7 @@ public partial class MyTest : IClassFixture<WebApplicationFactory<Program>>
       var encrypt_result = JsonConvert.DeserializeObject<MyResponseType>(encrypt_response_string);
 
       // 復号化を行う
-      var decrypt_request_path = $"/api/cipher/aes/ecb/decrypt/{cipher_length}?key={key_string}&data={encrypt_result!.Encrypted}";
+      var decrypt_request_path = $"/api/cipher/aes/ecb/decrypt/{cipher_length}?key={key_string}&data={Uri.EscapeDataString(encrypt_result!.Encrypted!)}";
       _testOutputHelper.WriteLine($"decrypt_request_path -> {decrypt_request_path}");
       var decrypt_response = await _client.GetAsync(decrypt_request_path);
       decrypt_response.EnsureSuccessStatusCode();
