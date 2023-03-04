@@ -49,7 +49,7 @@ public partial class MyTest : IClassFixture<WebApplicationFactory<Program>>
   }
 
   [Fact]
-  public async Task ECB_size_valider()
+  public async Task ECB_size_validater()
   {
     {
       var encrypt_request_path = $"/api/cipher/aes/ecb/encrypt/{100}?key=HelloWorld&data=HelloWorld";
