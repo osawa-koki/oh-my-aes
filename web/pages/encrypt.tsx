@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Alert, Button, Form } from "react-bootstrap";
+import { Alert, Button, Form, Spinner } from "react-bootstrap";
 import Layout from "../components/Layout";
 import setting from "../setting";
 import hasWhitespaceAtEitherEnd from "../src/hasWhitespaceAtEitherEnd";
@@ -12,9 +12,12 @@ export default function EncryptPage() {
   const [encrypted, setEncrypted] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState<boolean>(false);
+  const [waiting, setWaiting] = useState<boolean>(false);
 
   const Encrypt = async () => {
     try {
+      setWaiting(true);
+      await new Promise(resolve => setTimeout(resolve, setting.smallWaitingTime));
       fetch(`${setting.apiPath}/api/cipher/aes/ecb/encrypt/256?key=${key}&data=${content}`)
         .then(res => res.json())
         .then((json: MyResponseType) => {
@@ -22,6 +25,8 @@ export default function EncryptPage() {
         })
         .catch(e => {
           setError(e.message);
+        }).finally(() => {
+          setWaiting(false);
         });
     } catch (e) {
       setError(e.message);
@@ -47,7 +52,22 @@ export default function EncryptPage() {
             </Alert>
           )
         }
-        <Button variant="primary" onClick={Encrypt} className="mt-3 d-block m-auto">暗号化 🔏</Button>
+        {
+          waiting ? (
+            <div className="mt-3 d-flex justify-content-between">
+              <Spinner animation="border" variant="primary" />
+              <Spinner animation="border" variant="secondary" />
+              <Spinner animation="border" variant="success" />
+              <Spinner animation="border" variant="danger" />
+              <Spinner animation="border" variant="warning" />
+              <Spinner animation="border" variant="info" />
+              <Spinner animation="border" variant="light" />
+              <Spinner animation="border" variant="dark" />
+            </div>
+          ) : (
+            <Button variant="primary" onClick={Encrypt} className="mt-3 d-block m-auto">暗号化 🔏</Button>
+          )
+        }
         <hr />
         {
           error !== null ? (
