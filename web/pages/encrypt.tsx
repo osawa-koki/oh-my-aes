@@ -5,10 +5,15 @@ import setting from "../setting";
 import hasWhitespaceAtEitherEnd from "../src/hasWhitespaceAtEitherEnd";
 import { MyResponseType } from "../src/ResponseType";
 
+const cipher_modes = ['ECB', 'CBC', 'CFB'];
+const cipher_key_sizes = ['128', '192', '256'];
+
 export default function EncryptPage() {
 
   const [content, setContent] = useState<string>('こんにちは！');
   const [key, setKey] = useState<string>('my-key');
+  const [mode, setMode] = useState<string>('ECB');
+  const [key_size, setKeySize] = useState<string>('256');
   const [encrypted, setEncrypted] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState<boolean>(false);
@@ -17,8 +22,10 @@ export default function EncryptPage() {
   const Encrypt = async () => {
     try {
       setWaiting(true);
+      setEncrypted(null);
+      setError(null);
       await new Promise(resolve => setTimeout(resolve, setting.smallWaitingTime));
-      fetch(`${setting.apiPath}/api/cipher/aes/ecb/encrypt/256?key=${key}&data=${content}`)
+      fetch(`${setting.apiPath}/api/cipher/aes/encrypt/${mode}/${key_size}?key=${key}&data=${content}`)
         .then(res => res.json())
         .then((json: MyResponseType) => {
           setEncrypted(json.encrypted);
@@ -44,6 +51,27 @@ export default function EncryptPage() {
         <Form.Group className="mt-3">
           <Form.Label>暗号化キー</Form.Label>
           <Form.Control type="text" placeholder="Enter Key" value={key} onInput={(e) => {setKey((e.target as HTMLTextAreaElement).value)}} />
+        </Form.Group>
+        <hr />
+        <Form.Group className="mt-3 d-flex">
+          <Form.Label className="w-50">暗号化モード</Form.Label>
+          <Form.Select aria-label="Select Cipher Mode" value={mode} onInput={(e) => {setMode((e.target as HTMLSelectElement).value)}}>
+            {
+              cipher_modes.map((_mode, _) => {
+                return <option key={_mode}>{_mode}</option>;
+              })
+            }
+          </Form.Select>
+        </Form.Group>
+        <Form.Group className="mt-3 d-flex">
+          <Form.Label className="w-50">ビットサイズ</Form.Label>
+          <Form.Select aria-label="Select Cipher Key Size" onInput={(e) => {setKeySize((e.target as HTMLSelectElement).value)}}>
+            {
+              cipher_key_sizes.map((_key_size, _) => {
+                return <option key={_key_size}>{_key_size}</option>;
+              })
+            }
+          </Form.Select>
         </Form.Group>
         {
           hasWhitespaceAtEitherEnd(content) && (
