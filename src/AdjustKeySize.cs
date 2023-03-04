@@ -1,6 +1,11 @@
 
 public static partial class Util
 {
+  /// <summary>
+  /// バイト配列のサイズを調整する
+  /// </summary>
+  /// <param name="bytes">調整対象のバイト配列</param>
+  /// <param name="bit">ビット数</param>
   public static void AdjustKeySize(byte[] bytes, int bit)
   {
     // キーの長さを調整する
