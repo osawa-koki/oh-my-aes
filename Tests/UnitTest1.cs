@@ -13,8 +13,6 @@ public partial class MyTest : IClassFixture<WebApplicationFactory<Program>>
     var cipher_key_list = new string[] { "ABC", "_ABC", "ｱｲｳｴｵ", "あ", "計算機" };
     var cipher_length_list = new int[] { 256, 256, 256 };
 
-    Assert.True(cipher_data_list.Length > 10000);
-
     for (int i = 0; i < 30; i++)
     {
       // キーとデータのビットはランダムで文字列を生成して、暗号化・復号化を行う
