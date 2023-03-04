@@ -15,21 +15,7 @@ public static class ECB
       byte[] key_bytes = Encoding.UTF8.GetBytes(key);
 
       // キーの長さを調整する
-      int keySize = bit / 8;
-      if (key_bytes.Length != keySize)
-      {
-        Array.Resize(ref key_bytes, keySize);
-        if (key_bytes.Length < keySize)
-        {
-          // キーの長さが指定されたビット数に満たない場合は、ゼロパディングする
-          Array.Clear(key_bytes, key_bytes.Length, keySize - key_bytes.Length);
-        }
-        else
-        {
-          // キーの長さが指定されたビット数を超えている場合は、切り捨てる
-          Array.Resize(ref key_bytes, keySize);
-        }
-      }
+      Util.AdjustKeySize(key_bytes, bit);
 
       // AESのインスタンスを作成する
       Aes aes = Aes.Create();
@@ -85,21 +71,7 @@ public static class ECB
       byte[] key_bytes = Encoding.UTF8.GetBytes(key);
 
       // キーの長さを調整する
-      int keySize = bit / 8;
-      if (key_bytes.Length != keySize)
-      {
-        Array.Resize(ref key_bytes, keySize);
-        if (key_bytes.Length < keySize)
-        {
-          // キーの長さが指定されたビット数に満たない場合は、ゼロパディングする
-          Array.Clear(key_bytes, key_bytes.Length, keySize - key_bytes.Length);
-        }
-        else
-        {
-          // キーの長さが指定されたビット数を超えている場合は、切り捨てる
-          Array.Resize(ref key_bytes, keySize);
-        }
-      }
+      Util.AdjustKeySize(key_bytes, bit);
 
       // AESのインスタンスを作成する
       Aes aes = Aes.Create();
