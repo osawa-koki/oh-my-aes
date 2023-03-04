@@ -10,6 +10,7 @@ export default function EncryptPage() {
   const [key, setKey] = useState<string>('my-key');
   const [decrypted, setDecrypted] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [copied, setCopied] = useState<boolean>(false);
 
   const Encrypt = async () => {
     try {
@@ -50,9 +51,8 @@ export default function EncryptPage() {
           <Form.Label>暗号化キー</Form.Label>
           <Form.Control type="text" placeholder="Enter Key" value={key} onInput={(e) => {setKey((e.target as HTMLTextAreaElement).value)}} />
         </Form.Group>
-        <div className="mt-3 d-flex justify-content-center">
-          <Button variant="primary" onClick={Encrypt}>復号 🔏</Button>
-        </div>
+        <Button variant="primary" onClick={Encrypt} className="mt-3 d-block m-auto">復号 🔏</Button>
+        <hr />
         {
           error !== null ? (
             <>
@@ -73,6 +73,14 @@ export default function EncryptPage() {
                     <Form.Label>復号された文字列</Form.Label>
                     <Form.Control readOnly as="textarea" value={decrypted} rows={5} />
                   </Form.Group>
+                  <Button variant="warning" className="mt-3 d-block m-auto" onClick={async () => {
+                    setCopied(true);
+                    navigator.clipboard.writeText(decrypted);
+                    await new Promise(resolve => setTimeout(resolve, setting.waitingTime));
+                    setCopied(false);
+                  }} disabled={copied}>
+                    {copied ? 'コピーしました' : 'コピー'}
+                  </Button>
                 </>
               )
             }
