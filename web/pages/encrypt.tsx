@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import Layout from "../components/Layout";
+import setting from "../setting";
 import { MyResponseType } from "../src/ResponseType";
 
 export default function EncryptPage() {
@@ -12,7 +13,7 @@ export default function EncryptPage() {
 
   const Encrypt = async () => {
     try {
-      fetch(`http://localhost:8000/api/cipher/aes/ecb/encrypt/256?key=${key}&data=${content}`)
+      fetch(`${setting.apiPath}/api/cipher/aes/ecb/encrypt/256?key=${key}&data=${content}`)
         .then(res => res.json())
         .then((json: MyResponseType) => {
           setEncrypted(json.Encrypted);
