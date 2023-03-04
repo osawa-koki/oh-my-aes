@@ -6,6 +6,9 @@ on:
       - main
       - develop
 
+env:
+  nextjs_directory: ./web
+
 jobs:
   dotnet-test:
     runs-on: ubuntu-latest
@@ -29,6 +32,7 @@ jobs:
           node-version: 18.x
       - name: Install dependencies
         run: yarn install
+        working-directory: ${{ env.nextjs_directory }}
       - name: Test
         run: yarn test
-        working-directory: ./web
+        working-directory: ${{ env.nextjs_directory }}
