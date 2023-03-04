@@ -13,9 +13,9 @@ public enum CipherAlgo
 }
 
 public record MyResponseType(
-  CipherMethod CipherMethod,
-  CipherAlgo CipherAlgo,
-  CipherMode CipherMode,
+  string CipherMethod,
+  string CipherAlgo,
+  string CipherMode,
   int CipherLength,
   string Key,
   string? IV,

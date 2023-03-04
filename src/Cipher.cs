@@ -25,8 +25,6 @@ namespace oh_my_aes
           "ECB" => CipherMode.ECB,
           "CBC" => CipherMode.CBC,
           "CFB" => CipherMode.CFB,
-          "OFB" => CipherMode.OFB,
-          "CTS" => CipherMode.CTS,
           _ => null,
         };
         if (my_mode == null)
@@ -47,27 +45,27 @@ namespace oh_my_aes
         byte[] iv_bytes = Encoding.UTF8.GetBytes(iv);
         Util.AdjustKeySize(ref iv_bytes, 128);
 
+
+        // 暗号化を行う
+        byte[] encrypted_bytes = Array.Empty<byte>();
+
         // AESのインスタンスを作成する
         Aes aes = Aes.Create();
         aes.Key = key_bytes;
         aes.Mode = (CipherMode)my_mode;
         aes.IV = iv_bytes;
 
-        // 暗号化を行う
-        byte[] encrypted_bytes;
-        using (ICryptoTransform encryptor = aes.CreateEncryptor())
-        {
-          encrypted_bytes = encryptor.TransformFinalBlock(plain_bytes, 0, plain_bytes.Length);
-        }
+        using ICryptoTransform encryptor = aes.CreateEncryptor();
+        encrypted_bytes = encryptor.TransformFinalBlock(plain_bytes, 0, plain_bytes.Length);
 
         // 暗号化されたバイト配列をBase64文字列に変換する
         string encryptedString = Convert.ToBase64String(encrypted_bytes);
         Console.WriteLine($"Encrypted string: {encryptedString}");
 
         MyResponseType response = new(
-          CipherMethod.Encrypt,
-          CipherAlgo.AES,
-          CipherMode.CBC,
+          CipherMethod.Encrypt.ToString(),
+          CipherAlgo.AES.ToString(),
+          my_mode?.ToString()!,
           bit,
           key,
           iv,
@@ -108,8 +106,6 @@ namespace oh_my_aes
           "ECB" => CipherMode.ECB,
           "CBC" => CipherMode.CBC,
           "CFB" => CipherMode.CFB,
-          "OFB" => CipherMode.OFB,
-          "CTS" => CipherMode.CTS,
           _ => null,
         };
         if (my_mode == null)
@@ -131,27 +127,25 @@ namespace oh_my_aes
         byte[] iv_bytes = Encoding.UTF8.GetBytes(iv);
         Util.AdjustKeySize(ref iv_bytes, 128);
 
+        // 復号化を行う
+        byte[] decryptedBytes = Array.Empty<byte>();
+
         // AESのインスタンスを作成する
         Aes aes = Aes.Create();
         aes.Key = key_bytes;
-        aes.Mode = CipherMode.CBC;
+        aes.Mode = (CipherMode)my_mode;
         aes.IV = iv_bytes;
 
-        // 復号化を行う
-        byte[] decryptedBytes;
-        using (ICryptoTransform decryptor = aes.CreateDecryptor())
-        {
-          decryptedBytes = decryptor.TransformFinalBlock(encrypted_bytes, 0, encrypted_bytes.Length);
-        }
+        using ICryptoTransform decryptor = aes.CreateDecryptor();
+        decryptedBytes = decryptor.TransformFinalBlock(encrypted_bytes, 0, encrypted_bytes.Length);
 
         // 復号化されたバイト配列をUTF8文字列に変換する
         string decryptedString = Encoding.UTF8.GetString(decryptedBytes);
-        Console.WriteLine($"Decrypted string: {decryptedString}");
 
         MyResponseType response = new(
-          CipherMethod.Decrypt,
-          CipherAlgo.AES,
-          CipherMode.CBC,
+          CipherMethod.Decrypt.ToString(),
+          CipherAlgo.AES.ToString(),
+          my_mode?.ToString()!,
           bit,
           key,
           iv,
