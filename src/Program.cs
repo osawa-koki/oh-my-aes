@@ -22,6 +22,6 @@ public class Program
     app.MapGet("/cipher/encrypt/{bit}", ECB.Encrypt).WithName("Encrypt").WithOpenApi();
     app.MapGet("/cipher/decrypt/{bit}", ECB.Decrypt).WithName("Decrypt").WithOpenApi();
 
-    app.Run("http://localhost:2525");
+    app.Run("http://localhost:8000");
   }
 }
