@@ -1,4 +1,4 @@
-﻿
+
 public enum MyCipherMethod
 {
   Encrypt,
@@ -7,12 +7,13 @@ public enum MyCipherMethod
 
 public enum MyCipherAlgo
 {
-  AES
+  AES,
 }
 
 public enum MyCipherMode
 {
-  ECB
+  ECB,
+  CBC,
 }
 
 public record MyResponseType(
