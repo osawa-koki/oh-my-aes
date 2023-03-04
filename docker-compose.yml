@@ -6,7 +6,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/my-app.conf
+      - ./web/nginx.conf:/etc/nginx/conf.d/my-app.conf
     depends_on:
       - api
   api:
