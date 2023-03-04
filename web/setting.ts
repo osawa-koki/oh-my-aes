@@ -7,6 +7,7 @@ const setting = {
   basePath: Env.basePath,
   apiPath: isProd ? '' : 'http://localhost:8000',
   title: '🐸 Next.js Template 🐸',
+  waitingTime: 1000,
 };
 
 export default setting;
