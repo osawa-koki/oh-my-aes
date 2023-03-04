@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import Layout from "../components/Layout";
 import setting from "../setting";
+import hasWhitespaceAtEitherEnd from "../src/hasWhitespaceAtEitherEnd";
 import { MyResponseType } from "../src/ResponseType";
 
 export default function EncryptPage() {
@@ -39,12 +40,10 @@ export default function EncryptPage() {
           <Form.Control type="text" placeholder="Enter Key" value={key} onInput={(e) => {setKey((e.target as HTMLTextAreaElement).value)}} />
         </Form.Group>
         {
-          content && (
-            <>
-              <Alert variant="warning" className="mt-3">
-                {warning}
-              </Alert>
-            </>
+          hasWhitespaceAtEitherEnd(content) && (
+            <Alert variant="warning" className="mt-3">
+              暗号化対象文字列の両端のいずれか、ないしは両方に空白類似文字が含まれています。
+            </Alert>
           )
         }
         <div className="mt-3 d-flex justify-content-center">
