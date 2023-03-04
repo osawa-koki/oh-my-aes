@@ -13,18 +13,28 @@ export default function EncryptPage() {
 
   const Encrypt = async () => {
     try {
-      fetch(`${setting.apiPath}/api/cipher/aes/ecb/decrypt/256?key=${key}&data=${content}`)
-        .then(res => res.json())
+      await fetch(`${setting.apiPath}/api/cipher/aes/ecb/decrypt/256?key=${key}&data=${content.replace("=", "%3D")}`)
+        .then(async (res) => {
+          if (res.status === 500) {
+            throw new Error(`サーバサイドで予期せぬエラーが発生しました。`);
+          }
+          if (res.status === 400) {
+            throw new Error(`復号できないデータです。`);
+          }
+          if (res.status !== 200) {
+            throw new Error(`${res.statusText}`);
+          }
+          return res.json();
+        })
         .then((json: MyResponseType) => {
+          setError(null);
           setDecrypted(json.decrypted);
         })
         .catch(e => {
-          setError(e.message);
-          console.log("###");
-
+          setError(`${e.message}`);
         });
     } catch (e) {
-      setError(e.message);
+      setError(`${e}`);
     }
   };
 
@@ -47,6 +57,7 @@ export default function EncryptPage() {
           error !== null ? (
             <>
               <Alert variant="danger" className="mt-3">
+                <Alert.Heading>復号に失敗しました。</Alert.Heading>
                 {error}
               </Alert>
             </>
