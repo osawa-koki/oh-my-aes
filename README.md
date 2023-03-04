@@ -9,6 +9,8 @@
 dotnet run --project ./src
 ```
 
+<http://localhost:8000/swagger/index.html>へアクセス。  
+
 ## テスト方法
 
 ```shell
