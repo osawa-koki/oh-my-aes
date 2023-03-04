@@ -6,14 +6,14 @@ import { MyResponseType } from "../src/ResponseType";
 
 export default function EncryptPage() {
 
-  const [content, setContent] = useState<string>('7hDnFrscaucE3pHHLfvLEdufK2/irI78ta06TXKUn3w=');
+  const [content, setContent] = useState<string>('UHitH3n3gDg5cn1SCsSFanIuZSRXK2hX7G+opdRbivM=');
   const [key, setKey] = useState<string>('my-key');
   const [decrypted, setDecrypted] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const Encrypt = async () => {
     try {
-      await fetch(`${setting.apiPath}/api/cipher/aes/ecb/decrypt/256?key=${key}&data=${content.replace(/\+/g, `%2B`)}`)
+      await fetch(`${setting.apiPath}/api/cipher/aes/ecb/decrypt/256?key=${key}&data=${encodeURIComponent(content)}`)
         .then(async (res) => {
           if (res.status === 500) {
             throw new Error(`サーバサイドで予期せぬエラーが発生しました。`);
