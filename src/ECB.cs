@@ -78,6 +78,8 @@ public static class ECB
   {
     try
     {
+      Console.WriteLine($"Decrypting {data} with {key}...");
+
       // 暗号化された文字列をBase64でデコードしてバイト配列に変換する
       string encryptedString = data ?? "";
       byte[] encryptedBytes = Convert.FromBase64String(encryptedString);

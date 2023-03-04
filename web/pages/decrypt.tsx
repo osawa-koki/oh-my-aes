@@ -13,7 +13,7 @@ export default function EncryptPage() {
 
   const Encrypt = async () => {
     try {
-      await fetch(`${setting.apiPath}/api/cipher/aes/ecb/decrypt/256?key=${key}&data=${content.replace("=", "%3D")}`)
+      await fetch(`${setting.apiPath}/api/cipher/aes/ecb/decrypt/256?key=${key}&data=${content.replace(/\+/g, `%2B`)}`)
         .then(async (res) => {
           if (res.status === 500) {
             throw new Error(`サーバサイドで予期せぬエラーが発生しました。`);
