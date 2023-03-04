@@ -11,6 +11,7 @@ export default function EncryptPage() {
 
   const [content, setContent] = useState<string>('UHitH3n3gDg5cn1SCsSFanIuZSRXK2hX7G+opdRbivM=');
   const [key, setKey] = useState<string>('my-key');
+  const [iv, setIv] = useState<string>('');
   const [mode, setMode] = useState<string>('ECB');
   const [key_size, setKeySize] = useState<string>('256');
   const [decrypted, setDecrypted] = useState<string | null>(null);
@@ -24,7 +25,7 @@ export default function EncryptPage() {
       setDecrypted(null);
       setError(null);
       await new Promise(resolve => setTimeout(resolve, setting.smallWaitingTime));
-      await fetch(`${setting.apiPath}/api/cipher/aes/decrypt/${mode}/${key_size}?key=${key}&data=${encodeURIComponent(content)}`)
+      await fetch(`${setting.apiPath}/api/cipher/aes/decrypt/${mode}/${key_size}?key=${key}&data=${encodeURIComponent(content)}&iv=${mode === 'ECB' ? '' : iv}}`)
         .then(async (res) => {
           if (res.status === 500) {
             throw new Error(`サーバサイドで予期せぬエラーが発生しました。`);
@@ -83,6 +84,10 @@ export default function EncryptPage() {
               })
             }
           </Form.Select>
+        </Form.Group>
+        <Form.Group className="mt-3 d-flex">
+          <Form.Label className="w-50">IV</Form.Label>
+          <Form.Control type="text" placeholder={mode === 'ECB' ? "ECB mode does't use IV." : "Enter IV"} value={iv} onInput={(e) => {setIv((e.target as HTMLTextAreaElement).value)}} disabled={mode === 'ECB'} />
         </Form.Group>
         {
           waiting ? (
