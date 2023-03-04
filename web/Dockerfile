@@ -9,5 +9,5 @@ COPY . .
 RUN yarn build
 
 FROM base as final
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx.dev.conf /etc/nginx/nginx.conf
 COPY --from=build /src/dist /var/www/html

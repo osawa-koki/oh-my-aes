@@ -5,8 +5,6 @@ services:
     build: ./web
     ports:
       - "80:80"
-    volumes:
-      - ./web/nginx.conf:/etc/nginx/conf.d/my-app.conf
     restart: always
     depends_on:
       - api
