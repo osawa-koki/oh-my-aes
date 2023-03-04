@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  web:
+    build: ./web
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/my-app.conf
+    depends_on:
+      - app
+  api:
+    build: ./src
+    ports:
+      - "8000:8000"
