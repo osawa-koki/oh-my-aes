@@ -7,7 +7,7 @@ on:
       - develop
 
 jobs:
-  test:
+  dotnet-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -19,3 +19,16 @@ jobs:
         run: dotnet restore
       - name: Test
         run: dotnet test ./Tests
+  nextjs-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18.x
+      - name: Install dependencies
+        run: yarn install
+      - name: Test
+        run: yarn test
+        working-directory: ./web
