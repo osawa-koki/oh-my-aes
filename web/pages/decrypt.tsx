@@ -91,7 +91,7 @@ export default function EncryptPage() {
                   </Alert>
                   <Form.Group className="mt-3">
                     <Form.Label>復号された文字列</Form.Label>
-                    <Form.Control readOnly as="textarea" value={decrypted} rows={5} />
+                    <Form.Control as="textarea" value={decrypted} rows={5} />
                   </Form.Group>
                   <Button variant="warning" className="mt-3 d-block m-auto" onClick={async () => {
                     setCopied(true);
