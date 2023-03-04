@@ -6,14 +6,13 @@ EXPOSE 8000
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["src/Program.csproj", "src/"]
-RUN dotnet restore "src/Program.csproj"
+COPY ./Program.csproj .
+RUN dotnet restore ./Program.csproj
 COPY . .
-WORKDIR "/src/src"
-RUN dotnet build "Program.csproj" -c Release -o /app/build
+RUN dotnet build ./Program.csproj -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Program.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish ./Program.csproj -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
