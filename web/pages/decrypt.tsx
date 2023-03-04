@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Alert, Button, Form } from "react-bootstrap";
+import { Alert, Button, Form, Spinner } from "react-bootstrap";
 import Layout from "../components/Layout";
 import setting from "../setting";
 import { MyResponseType } from "../src/ResponseType";
@@ -11,9 +11,12 @@ export default function EncryptPage() {
   const [decrypted, setDecrypted] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState<boolean>(false);
+  const [waiting, setWaiting] = useState<boolean>(false);
 
   const Encrypt = async () => {
     try {
+      setWaiting(true);
+      await new Promise(resolve => setTimeout(resolve, setting.smallWaitingTime));
       await fetch(`${setting.apiPath}/api/cipher/aes/ecb/decrypt/256?key=${key}&data=${encodeURIComponent(content)}`)
         .then(async (res) => {
           if (res.status === 500) {
@@ -33,6 +36,8 @@ export default function EncryptPage() {
         })
         .catch(e => {
           setError(`${e.message}`);
+        }).finally(() => {
+          setWaiting(false);
         });
     } catch (e) {
       setError(`${e}`);
@@ -51,7 +56,22 @@ export default function EncryptPage() {
           <Form.Label>暗号化キー</Form.Label>
           <Form.Control type="text" placeholder="Enter Key" value={key} onInput={(e) => {setKey((e.target as HTMLTextAreaElement).value)}} />
         </Form.Group>
-        <Button variant="primary" onClick={Encrypt} className="mt-3 d-block m-auto">復号 🔏</Button>
+        {
+          waiting ? (
+            <div className="mt-3 d-flex justify-content-between">
+              <Spinner animation="grow" variant="primary" />
+              <Spinner animation="grow" variant="secondary" />
+              <Spinner animation="grow" variant="success" />
+              <Spinner animation="grow" variant="danger" />
+              <Spinner animation="grow" variant="warning" />
+              <Spinner animation="grow" variant="info" />
+              <Spinner animation="grow" variant="light" />
+              <Spinner animation="grow" variant="dark" />
+            </div>
+          ) : (
+            <Button variant="primary" onClick={Encrypt} className="mt-3 d-block m-auto">復号 🔏</Button>
+          )
+        }
         <hr />
         {
           error !== null ? (
