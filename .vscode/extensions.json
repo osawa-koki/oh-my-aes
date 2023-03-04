@@ -3,6 +3,7 @@
     "davidanson.vscode-markdownlint",
     "github.copilot",
     "mhutchie.git-graph",
-    "editorconfig.editorconfig"
+    "editorconfig.editorconfig",
+    "ms-dotnettools.csharp"
   ]
 }
