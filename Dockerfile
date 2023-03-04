@@ -26,4 +26,4 @@ COPY ./web/nginx.conf /etc/nginx/nginx.conf
 COPY --from=web_build /src/dist /var/www/html
 COPY --from=api_build /src/build /app
 RUN dotnet Program.dll
-CMD system start nginx
+CMD service start nginx

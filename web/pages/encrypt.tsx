@@ -12,6 +12,7 @@ export default function EncryptPage() {
 
   const [content, setContent] = useState<string>('こんにちは！');
   const [key, setKey] = useState<string>('my-key');
+  const [iv, setIv] = useState<string>('');
   const [mode, setMode] = useState<string>('ECB');
   const [key_size, setKeySize] = useState<string>('256');
   const [encrypted, setEncrypted] = useState<string | null>(null);
@@ -25,7 +26,7 @@ export default function EncryptPage() {
       setEncrypted(null);
       setError(null);
       await new Promise(resolve => setTimeout(resolve, setting.smallWaitingTime));
-      fetch(`${setting.apiPath}/api/cipher/aes/encrypt/${mode}/${key_size}?key=${key}&data=${content}`)
+      fetch(`${setting.apiPath}/api/cipher/aes/encrypt/${mode}/${key_size}?key=${key}&data=${content}&iv=${mode === 'ECB' ? '' : iv}}`)
         .then(res => res.json())
         .then((json: MyResponseType) => {
           setEncrypted(json.encrypted);
@@ -72,6 +73,10 @@ export default function EncryptPage() {
               })
             }
           </Form.Select>
+        </Form.Group>
+        <Form.Group className="mt-3 d-flex">
+          <Form.Label className="w-50">IV</Form.Label>
+          <Form.Control type="text" placeholder={mode === 'ECB' ? "ECB mode does't use IV." : "Enter IV"} value={iv} onInput={(e) => {setIv((e.target as HTMLTextAreaElement).value)}} disabled={mode === 'ECB'} />
         </Form.Group>
         {
           hasWhitespaceAtEitherEnd(content) && (
