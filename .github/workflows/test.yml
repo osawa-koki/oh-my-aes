@@ -1,0 +1,38 @@
+name: Test .NET project and Next.js app
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+env:
+  nextjs_directory: ./web
+
+jobs:
+  dotnet-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET project
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.0.x
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Test
+        run: dotnet test ./Tests
+  nextjs-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - name: Install dependencies
+        run: yarn install
+        working-directory: ${{ env.nextjs_directory }}
+      - name: Test
+        run: yarn test
+        working-directory: ${{ env.nextjs_directory }}
