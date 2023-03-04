@@ -1,25 +1,21 @@
 
-public enum MyCipherMethod
+using System.Security.Cryptography;
+
+public enum CipherMethod
 {
   Encrypt,
   Decrypt,
 }
 
-public enum MyCipherAlgo
+public enum CipherAlgo
 {
   AES,
 }
 
-public enum MyCipherMode
-{
-  ECB,
-  CBC,
-}
-
 public record MyResponseType(
-  MyCipherMethod CipherMethod,
-  MyCipherAlgo CipherAlgo,
-  MyCipherMode CipherMode,
+  CipherMethod CipherMethod,
+  CipherAlgo CipherAlgo,
+  CipherMode CipherMode,
   int CipherLength,
   string Key,
   string? IV,
