@@ -137,9 +137,12 @@ public static class ECB
     {
       return Results.BadRequest(ex.Message);
     }
+    catch (FormatException ex)
+    {
+      return Results.BadRequest(ex.Message);
+    }
     catch (Exception ex)
     {
-      Console.WriteLine($"{ex}");
       return Results.Problem($"{ex}");
     }
   }
