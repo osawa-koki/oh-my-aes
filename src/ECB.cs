@@ -15,7 +15,7 @@ public static class ECB
       byte[] key_bytes = Encoding.UTF8.GetBytes(key);
 
       // キーの長さを調整する
-      Util.AdjustKeySize(key_bytes, bit);
+      Util.AdjustKeySize(ref key_bytes, bit);
 
       // AESのインスタンスを作成する
       Aes aes = Aes.Create();
@@ -71,7 +71,7 @@ public static class ECB
       byte[] key_bytes = Encoding.UTF8.GetBytes(key);
 
       // キーの長さを調整する
-      Util.AdjustKeySize(key_bytes, bit);
+      Util.AdjustKeySize(ref key_bytes, bit);
 
       // AESのインスタンスを作成する
       Aes aes = Aes.Create();

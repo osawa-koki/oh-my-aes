@@ -6,7 +6,7 @@ public static partial class Util
   /// </summary>
   /// <param name="bytes">調整対象のバイト配列</param>
   /// <param name="bit">ビット数</param>
-  public static void AdjustKeySize(byte[] bytes, int bit)
+  public static void AdjustKeySize(ref byte[] bytes, int bit)
   {
     // キーの長さを調整する
     int keySize = bit / 8;
