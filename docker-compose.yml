@@ -2,13 +2,13 @@ version: '3'
 
 services:
   web:
-    build: ./web/Dockerfile.dev
+    build: ./web
     ports:
       - "80:80"
     restart: always
     depends_on:
       - api
   api:
-    build: ./src/Dockerfile
+    build: ./src
     ports:
       - "8000:8000" # デバグ用
