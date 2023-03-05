@@ -1,7 +1,8 @@
 FROM ubuntu:20.04 as base
 WORKDIR /app
 EXPOSE 80
-RUN apt update -y && apt install -y tzdata && apt install -y nginx wget
+RUN apt update -y && apt install -y tzdata
+RUN apt update -y && apt install -y nginx wget
 RUN wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
     dpkg -i packages-microsoft-prod.deb && \
     rm packages-microsoft-prod.deb
@@ -25,5 +26,5 @@ FROM base AS final
 COPY ./web/nginx.conf /etc/nginx/nginx.conf
 COPY --from=web_build /src/dist /var/www/html
 COPY --from=api_build /src/build /app
-RUN nohup dotnet Program.dll &
-CMD service start nginx
+COPY ./start.sh .
+CMD ./start.sh
