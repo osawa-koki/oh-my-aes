@@ -27,4 +27,5 @@ COPY ./web/nginx.conf /etc/nginx/nginx.conf
 COPY --from=web_build /src/dist /var/www/html
 COPY --from=api_build /src/build /app
 COPY ./start.sh .
+RUN chmod +x ./start.sh
 CMD ./start.sh
