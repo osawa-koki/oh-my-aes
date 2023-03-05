@@ -1,4 +1,4 @@
 #!/bin/bash
 
-dotnet Program.dll &
+nohup dotnet Program.dll &
 service nginx start
