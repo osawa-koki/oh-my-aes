@@ -1,2 +1,2 @@
 dotnet Program.dll &
-systemctl nginx start
+service nginx start

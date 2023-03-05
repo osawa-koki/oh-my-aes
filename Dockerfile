@@ -1,7 +1,8 @@
 FROM ubuntu:20.04 as base
 WORKDIR /app
 EXPOSE 80
-RUN apt update -y && apt install -y tzdata && apt install -y nginx wget
+RUN apt update -y && apt install -y tzdata
+RUN apt update -y && apt install -y nginx wget
 RUN wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
     dpkg -i packages-microsoft-prod.deb && \
     rm packages-microsoft-prod.deb
