@@ -31,7 +31,7 @@ docker-compose up -d --build
 
 ```shell
 docker build -t oh-my-aes .
-docker run --rm -d -p 80:80 --name oh-my-aes oh-my-aes
+docker run --rm -itd -p 80:80 --name oh-my-aes oh-my-aes
 ```
 
 ## テスト方法
