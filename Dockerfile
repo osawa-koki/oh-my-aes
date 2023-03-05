@@ -25,5 +25,5 @@ FROM base AS final
 COPY ./web/nginx.conf /etc/nginx/nginx.conf
 COPY --from=web_build /src/dist /var/www/html
 COPY --from=api_build /src/build /app
-RUN nohup dotnet Program.dll &
-CMD service start nginx
+COPY ./start.sh .
+CMD ./start.sh
